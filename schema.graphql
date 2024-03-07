@@ -33,7 +33,6 @@ enum OfferType {
   ASK
 }
 
-
 """
 Graph Network global parameters and contract addresses
 """
@@ -304,7 +303,8 @@ type GraphAccount @entity {
 
   # Transactions / activity feed
   "Name signal transactions created by this GraphAccount"
-  nameSignalTransactions: [NameSignalTransaction!]! @derivedFrom(field: "signer")
+  nameSignalTransactions: [NameSignalTransaction!]!
+    @derivedFrom(field: "signer")
 
   # Token Lock Wallets that this account is associated with
   tokenLockWallets: [TokenLockWallet!]!
@@ -413,11 +413,10 @@ type CurrentSubgraphDeploymentRelation @entity {
   active: Boolean!
 }
 
-
 type Network @entity {
   id: ID!
 
-  deployments: [SubgraphDeployment!]! @derivedFrom(field:"network")
+  deployments: [SubgraphDeployment!]! @derivedFrom(field: "network")
 }
 
 type SubgraphCategoryRelation @entity {
@@ -951,7 +950,7 @@ Auxiliary entity to be able to batch update NameSignal entities
 """
 type NameSignalSubgraphRelation @entity {
   "Subgraph ID + index"
-  id:ID!
+  id: ID!
 
   nameSignal: NameSignal!
 
@@ -1208,7 +1207,6 @@ enum Revocability {
   Disabled
 }
 
-
 """
 Token Lock Wallets which hold locked GRT
 """
@@ -1225,7 +1223,6 @@ type TokenLockMetadata @entity {
   releaseStartTime: BigInt!
 }
 
-
 """
 Full test search for displayName and description on the Subgraph Entity
 """
@@ -1234,17 +1231,32 @@ type _Schema_
     name: "subgraphSearch"
     language: en
     algorithm: rank
-    include: [{ entity: "Subgraph", fields: [{ name: "displayName" }, { name: "description" }] }]
+    include: [
+      {
+        entity: "Subgraph"
+        fields: [{ name: "displayName" }, { name: "description" }]
+      }
+    ]
   )
   @fulltext(
     name: "curatorSearch"
     language: en
     algorithm: rank
-    include: [{ entity: "Curator", fields: [{ name: "defaultDisplayName" }, { name: "id" }] }]
+    include: [
+      {
+        entity: "Curator"
+        fields: [{ name: "defaultDisplayName" }, { name: "id" }]
+      }
+    ]
   )
   @fulltext(
     name: "delegatorSearch"
     language: en
     algorithm: rank
-    include: [{ entity: "Delegator", fields: [{ name: "defaultDisplayName" }, { name: "id" }] }]
+    include: [
+      {
+        entity: "Delegator"
+        fields: [{ name: "defaultDisplayName" }, { name: "id" }]
+      }
+    ]
   )
